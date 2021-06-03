@@ -1,0 +1,9 @@
+Django==3.2
+Pillow
+psycopg2-binary
+redis==3.5.3
+djangorestframework
+
+# This are Optional
+pylint==2.8.2
+django-debug-toolbar==3.2.1

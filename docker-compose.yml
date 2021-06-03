@@ -1,0 +1,26 @@
+version: "3.8"
+   
+services:
+    django:
+        build: .
+        command: >
+           /bin/ash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+        container_name: django
+        volumes:
+            - ./team-A:/team-A
+        ports:
+            - "8000:8000"
+        environment: 
+            - DATABASE_HOST=pgdb
+        env_file: 
+            ./.env
+        depends_on:
+            - pgdb
+    pgdb:
+        image: postgres
+        container_name: pgdb
+        environment:
+        - POSTGRES_DB=postgres
+        - POSTGRES_USER=postgres
+        - POSTGRES_PASSWORD=postgres
+
