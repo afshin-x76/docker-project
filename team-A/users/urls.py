@@ -17,8 +17,10 @@ urlpatterns =[
     path('register-customer/', views.RegisterCustomerView.as_view(), name='register_customer'),
     path('register-supplier/', views.RegisterSupplierView.as_view(), name='register_supplier'),
     path('change-password/', views.ChangePassword.as_view(), name='change_password'),
-    path('update-supplier/<int:pk>/', views.UpdateSupplierView.as_view(), name='update_supplier'),
-    path('update-customer/<int:pk>/', views.UpdateCustomerView.as_view(), name='update_customer'),
+    path('update-supplier/', views.UpdateSupplierView.as_view(), name='update_supplier'),
+    path('update-customer/', views.UpdateCustomerView.as_view(), name='update_customer'),
+    path('customer-profile/', views.CustomerProfile.as_view(), name='customer_profile'),
+    path('supplier-profile/', views.SupplierProfile.as_view(), name='supplier_profile'),
     
     path('reset-password/', views.PasswordResetView.as_view(), name='reset_password'),
     path('set-password/<token>/', views.PasswordResetVerifyView.as_view(), name='set_password'),

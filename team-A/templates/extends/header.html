@@ -50,11 +50,11 @@
                                                 </div> -->
                                                 <div class="button mt-2 d-flex flex-row align-items-center">
                                                     {% if request.user.is_customer %}
-                                                        <a href="{% url 'user:update_customer' request.user.pk %}">
+                                                        <a href="{% url 'user:customer_profile' %}">
                                                             <button class="btn btn-sm btn-outline-primary w-100 nowrap">My Account</button>
                                                         </a>
                                                     {% elif request.user.is_supplier %}
-                                                        <a href="{% url 'user:update_supplier' request.user.pk %}">
+                                                        <a href="{% url 'user:supplier_profile' %}">
                                                             <button class="btn btn-sm btn-outline-primary w-100 nowrap">My Account</button>
                                                         </a>
                                                     {% endif %}

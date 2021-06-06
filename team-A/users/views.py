@@ -6,7 +6,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views import View
-from django.views.generic import CreateView, UpdateView
+from django.views.generic import CreateView, UpdateView, TemplateView
 from django.contrib.auth.forms import (
     AuthenticationForm, PasswordChangeForm,
     )
@@ -64,12 +64,18 @@ class UpdateSupplierView(UpdateView):
     form_class = SupplierProfileForm
     success_url = reverse_lazy('shop:home')
 
+    def get_object(self, *args, **kwargs):
+        return self.request.user
+
 
 class UpdateCustomerView(UpdateView):
     model = Customer
     template_name = 'authentication/update-profile.html'
     form_class = CustomerProfileForm
     success_url = reverse_lazy('shop:home')
+
+    def get_object(self, *args, **kwargs):
+        return self.request.user
 
 
 class PasswordResetView(View):
@@ -119,3 +125,18 @@ class PasswordResetVerifyView(View):
             user.set_password(pas1)
             return redirect(reverse_lazy('shop:home'))
         return redirect(reverse_lazy('user:set_password'))
+
+
+class CustomerProfile(TemplateView):
+    template_name = 'customer-profile.html'
+
+
+class SupplierProfile(TemplateView):
+    template_name = 'supplier-profile.html'
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context['products'] = self.request.user.products.all()
+        return context
+
+    
