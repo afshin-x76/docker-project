@@ -11,8 +11,7 @@ class AddUserMiddleWare(MiddlewareMixin):
     def process_request(self, request):
         user_type = request.session.get('type', None)
         if user_type == 'customer':
-            pass
-            # request.user = Customer.objects.get(pk=request.user.pk)
+            request.user = Customer.objects.get(pk=request.user.pk)
         elif user_type == 'supplier':
             request.user = Supplier.objects.get(pk=request.user.pk)
 

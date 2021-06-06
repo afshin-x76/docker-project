@@ -4,4 +4,8 @@ WORKDIR /team-A
 
 ENV PYTHONDONTWRITEBYTECODE 1
 
-COPY ./team-A .
+# COPY ./team-A .
+
+# VOLUME ./team-A .
+
+
