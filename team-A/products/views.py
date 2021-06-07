@@ -1,5 +1,7 @@
 import os
 from pathlib import Path
+import requests
+import json
 
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
@@ -277,3 +279,31 @@ def send_sms(request):
     params = { 'sender' : '1000596446', 'receptor': '09214661058', 'message' :'.وب سرویس پیام کوتاه کاوه نگار' }
     response = api.sms_send(params)
     return redirect(reverse_lazy('shop:home'))
+
+
+class CheckOutView(View):
+    def get(self, request):
+        return render(request, 'checkout.html')
+
+    def post(self, request):
+        payload = {
+            'order_id': 1010,
+            'amount': 10000,
+            'name': f'{request.POST.get("name")} {request.POST.get("lastname")}',
+            'phone': '02193123',
+            'mail': "email@mmm.com",
+            'desc': request.POST.get('description'),
+            'callback': str(reverse_lazy('shop:checkout_callback')),
+        }
+        headers = {
+            'X-SANDBOX': '1',
+            'X-API-KEY': '07b2d66e-3235-4551-ba68-7e4fafacfcab',
+            'Content-Type': 'application/json'
+        }
+        url = 'https://api.idpay.ir/v1.1/payment'
+        r = json.loads(requests.post(url=url, data=json.dumps(payload), headers=headers).text)
+        return HttpResponseRedirect(r.get('link'))
+
+class CheckOutCallBackView(View):
+    def post(self, request):
+        print(request.POST)
